@@ -10,11 +10,15 @@ const ToDoApp = () => {
   const [deleteIndex, setDeleteIndex] = useState(null);
 
   // run after first render
-  // useEffect(() => {
-  //   console.log(value);
-  // }, [value]);
+  useEffect(() => {
+    const _arr = localStorage.getItem("todoList");
+    if (_arr) setArr(JSON.parse(_arr));
+  }, []);
 
-  // localStorage.setItem("todoList", JSON.stringify(arr));
+  // run after every render
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(arr));
+  }, [arr]);
 
   const handleChange = (e) => {
     const { value } = e.target;
