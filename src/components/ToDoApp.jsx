@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Modal from "./Modal";
 import ToDoCard from "./ToDoCard";
 import ToDoInput from "./ToDoInput";
 
 const ToDoApp = () => {
+  const refId = useRef(0);
   const [value, setValue] = useState("");
   const [arr, setArr] = useState([]);
   const [show, setShow] = useState(false);
@@ -22,6 +23,7 @@ const ToDoApp = () => {
 
   const handleEditClick = (value) => {
     console.log(value);
+    setValue(value);
   };
 
   const handleChange = (e) => {
@@ -33,6 +35,8 @@ const ToDoApp = () => {
     if (!value.trim()) {
       return;
     }
+    refId.current++;
+    console.log(refId);
     setArr([...arr, value.trim()]);
     setValue("");
   };
