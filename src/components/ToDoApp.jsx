@@ -7,6 +7,7 @@ const ToDoApp = () => {
   const refId = useRef(0);
   const [value, setValue] = useState("");
   const [arr, setArr] = useState([]);
+  const [editId, setEditId] = useState(null);
   const [show, setShow] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
 
@@ -22,8 +23,8 @@ const ToDoApp = () => {
   }, [arr]);
 
   const handleEditClick = (value, id) => {
-    console.log(value, id);
     setValue(value);
+    setEditId(id);
   };
 
   const handleChange = (e) => {
@@ -37,15 +38,23 @@ const ToDoApp = () => {
       return;
     }
 
-    refId.current++;
-    setArr((prevState) => [
-      ...prevState,
-      {
-        id: refId.current,
-        value: trimmedValue,
-      },
-    ]);
+    if (editId) {
+      let _arr = [...arr];
+      const editIndex = _arr.findIndex((item) => item.id === editId);
+      _arr[editIndex].value = trimmedValue;
+      setArr(_arr);
+    } else {
+      refId.current++;
+      setArr((prevState) => [
+        ...prevState,
+        {
+          id: refId.current,
+          value: trimmedValue,
+        },
+      ]);
+    }
     setValue("");
+    setEditId(null);
   };
 
   const handleModalShow = (index) => {
