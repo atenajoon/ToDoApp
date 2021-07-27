@@ -9,7 +9,6 @@ const ToDoApp = () => {
   const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
   const [show, setShow] = useState(false);
-  const [deleteIndex, setDeleteIndex] = useState(null);
 
   // run after first render
   useEffect(() => {
@@ -57,15 +56,17 @@ const ToDoApp = () => {
     setEditId(null);
   };
 
-  const handleModalShow = (index) => {
+  const handleModalShow = (id) => {
     setShow(!show);
-    setDeleteIndex(index);
+    setEditId(id);
   };
 
   const handleDelete = () => {
-    let newArr = [...arr];
-    newArr.splice(deleteIndex, 1);
-    setArr(newArr);
+    let _arr = [...arr];
+    const editIndex = _arr.findIndex((item) => item.id === editId);
+
+    _arr.splice(editIndex, 1);
+    setArr(_arr);
     setShow(!show);
   };
 
@@ -77,11 +78,11 @@ const ToDoApp = () => {
         onAdd={handleAdd}
         editId={editId}
       />
-      {arr.map(({ id, value }, index) => (
+      {arr.map(({ id, value }) => (
         <ToDoCard
-          key={index}
+          key={id}
           item={value}
-          onDelete={() => handleModalShow(index)}
+          onDelete={() => handleModalShow(id)}
           onEdit={() => handleEditClick(value, id)}
         />
       ))}
