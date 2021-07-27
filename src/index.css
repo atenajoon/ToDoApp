@@ -60,6 +60,15 @@ h2 {
   border-color: #066e6e;
 }
 
+.btn--yellow {
+  background-color: rgb(143, 129, 0);
+  border-color: rgb(151, 136, 0);
+}
+.btn--yellow:hover {
+  background-color: rgb(155, 139, 1);
+  border-color: rgb(165, 149, 4);
+}
+
 .card {
   background-color: white;
   border-radius: 4px;

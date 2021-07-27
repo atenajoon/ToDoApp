@@ -20,6 +20,10 @@ const ToDoApp = () => {
     localStorage.setItem("todoList", JSON.stringify(arr));
   }, [arr]);
 
+  const handleEditClick = (value) => {
+    console.log(value);
+  };
+
   const handleChange = (e) => {
     const { value } = e.target;
     setValue(value);
@@ -48,11 +52,12 @@ const ToDoApp = () => {
   return (
     <div>
       <ToDoInput value={value} onChange={handleChange} onAdd={handleAdd} />
-      {arr.map((item, index) => (
+      {arr.map((value, index) => (
         <ToDoCard
           key={index}
-          item={item}
+          item={value}
           onDelete={() => handleModalShow(index)}
+          onEdit={() => handleEditClick(value)}
         />
       ))}
       <Modal
