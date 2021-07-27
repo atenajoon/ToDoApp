@@ -71,7 +71,12 @@ const ToDoApp = () => {
 
   return (
     <div>
-      <ToDoInput value={value} onChange={handleChange} onAdd={handleAdd} />
+      <ToDoInput
+        value={value}
+        onChange={handleChange}
+        onAdd={handleAdd}
+        editId={editId}
+      />
       {arr.map(({ id, value }, index) => (
         <ToDoCard
           key={index}

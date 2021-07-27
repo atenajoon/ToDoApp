@@ -1,11 +1,11 @@
 import Button from "./Button";
 
-const ToDoInput = ({ value, onChange, onAdd }) => {
+const ToDoInput = ({ value, onChange, onAdd, editId }) => {
   return (
     <div>
       <input value={value} onChange={onChange} />
       <Button className="btn--green" onClick={onAdd}>
-        Add
+        {editId ? "Update" : "Add"}
       </Button>
     </div>
   );
