@@ -40,9 +40,6 @@ const ToDoApp = () => {
 
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(localList));
-    console.log("apiList: ", apiList);
-    console.log("localList: ", localList);
-    console.log("arr: ", arr);
   }, [localList]);
 
   const handleEditClick = (title, id) => {
@@ -102,7 +99,7 @@ const ToDoApp = () => {
         onAdd={handleAdd}
         editId={editId}
       />
-      {localList.map(({ id, title }) => (
+      {arr.map(({ id, title }) => (
         <ToDoCard
           key={id}
           id={id}
