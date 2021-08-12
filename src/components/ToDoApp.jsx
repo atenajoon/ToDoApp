@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { fetchData } from "../api";
 import Modal from "../Modal";
 import ToDoCard from "./ToDoCard";
 import ToDoInput from "./ToDoInput";
@@ -14,6 +15,11 @@ const ToDoApp = () => {
   useEffect(() => {
     const _arr = localStorage.getItem("todoList");
     if (_arr) setArr(JSON.parse(_arr));
+  }, []);
+
+  useEffect(() => {
+    // api call
+    fetchData.then((res) => console.log(res));
   }, []);
 
   // run after every render
