@@ -8,12 +8,15 @@ const ToDoApp = () => {
   const [value, setValue] = useState("");
   const [localList, setLocalList] = useState([]);
   const [apiList, setApiList] = useState([]);
+  const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
 
-  // run after first render
+  // run after first render:
+
   useEffect(() => {
+    // localStorage data fetch
     const _arr = localStorage.getItem("todoList");
     if (_arr) setLocalList(JSON.parse(_arr));
     console.log("localList: ", localList);
@@ -21,7 +24,6 @@ const ToDoApp = () => {
 
   useEffect(() => {
     // api call
-
     (async function func() {
       const data = await fetchData;
       setApiList(data);
@@ -29,11 +31,18 @@ const ToDoApp = () => {
     console.log("apiList: ", apiList);
   }, []);
 
-  // run after every render
+  useEffect(() => {
+    const _arr = [...apiList, ...localList];
+    setArr(_arr);
+  }, []);
+
+  // run after every render:
+
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(localList));
     console.log("apiList: ", apiList);
     console.log("localList: ", localList);
+    console.log("arr: ", arr);
   }, [localList]);
 
   const handleEditClick = (title, id) => {
