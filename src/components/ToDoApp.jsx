@@ -7,6 +7,7 @@ import ToDoInput from "./ToDoInput";
 const ToDoApp = () => {
   const [value, setValue] = useState("");
   const [arr, setArr] = useState([]);
+  const [apiArr, setApiArr] = useState([]);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
@@ -15,23 +16,29 @@ const ToDoApp = () => {
   useEffect(() => {
     const _arr = localStorage.getItem("todoList");
     if (_arr) setArr(JSON.parse(_arr));
+    console.log("arr: ", arr);
   }, []);
 
   useEffect(() => {
     // api call
-    fetchData.then((res) => console.log(res));
+
+    (async function func() {
+      const data = await fetchData;
+      setApiArr(data);
+    })();
+    console.log("apiArr: ", apiArr);
   }, []);
 
   // run after every render
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(arr));
+    console.log("apiArr: ", apiArr);
+    console.log("arr: ", arr);
   }, [arr]);
 
   const handleEditClick = (title, id) => {
     setValue(title);
     setEditId(id);
-    console.log("editId: ", editId);
-    console.log("title: ", title);
   };
 
   const handleChange = (e) => {
@@ -43,7 +50,6 @@ const ToDoApp = () => {
     let trimmedValue = value.trim();
     if (!trimmedValue) return;
 
-    console.log(editId);
     if (editId) {
       let _arr = [...arr];
       const editIndex = _arr.findIndex((item) => item.id === editId);
@@ -59,7 +65,6 @@ const ToDoApp = () => {
           title: trimmedValue,
         },
       ]);
-      console.log("added-arr:", arr);
     }
     setValue("");
     setEditId(null);
