@@ -6,8 +6,8 @@ import ToDoInput from "./ToDoInput";
 
 const ToDoApp = () => {
   const [value, setValue] = useState("");
-  const [arr, setArr] = useState([]);
-  const [apiArr, setApiArr] = useState([]);
+  const [localList, setLocalList] = useState([]);
+  const [apiList, setApiList] = useState([]);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
@@ -15,8 +15,8 @@ const ToDoApp = () => {
   // run after first render
   useEffect(() => {
     const _arr = localStorage.getItem("todoList");
-    if (_arr) setArr(JSON.parse(_arr));
-    console.log("arr: ", arr);
+    if (_arr) setLocalList(JSON.parse(_arr));
+    console.log("localList: ", localList);
   }, []);
 
   useEffect(() => {
@@ -24,17 +24,17 @@ const ToDoApp = () => {
 
     (async function func() {
       const data = await fetchData;
-      setApiArr(data);
+      setApiList(data);
     })();
-    console.log("apiArr: ", apiArr);
+    console.log("apiList: ", apiList);
   }, []);
 
   // run after every render
   useEffect(() => {
-    localStorage.setItem("todoList", JSON.stringify(arr));
-    console.log("apiArr: ", apiArr);
-    console.log("arr: ", arr);
-  }, [arr]);
+    localStorage.setItem("todoList", JSON.stringify(localList));
+    console.log("apiList: ", apiList);
+    console.log("localList: ", localList);
+  }, [localList]);
 
   const handleEditClick = (title, id) => {
     setValue(title);
@@ -51,14 +51,15 @@ const ToDoApp = () => {
     if (!trimmedValue) return;
 
     if (editId) {
-      let _arr = [...arr];
+      let _arr = [...localList];
       const editIndex = _arr.findIndex((item) => item.id === editId);
       _arr[editIndex].title = trimmedValue;
-      setArr(_arr);
+      setLocalList(_arr);
     } else {
-      let newId = arr.length > 0 ? arr[arr.length - 1].id + 1 : 1;
+      let newId =
+        localList.length > 0 ? localList[localList.length - 1].id + 1 : 1;
 
-      setArr((prevState) => [
+      setLocalList((prevState) => [
         ...prevState,
         {
           id: newId,
@@ -76,11 +77,11 @@ const ToDoApp = () => {
   };
 
   const handleDelete = () => {
-    let _arr = [...arr];
+    let _arr = [...localList];
     const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
 
     _arr.splice(deleteIndex, 1);
-    setArr(_arr);
+    setLocalList(_arr);
     setShow(!show);
   };
 
@@ -92,7 +93,7 @@ const ToDoApp = () => {
         onAdd={handleAdd}
         editId={editId}
       />
-      {arr.map(({ id, title }) => (
+      {localList.map(({ id, title }) => (
         <ToDoCard
           key={id}
           id={id}
