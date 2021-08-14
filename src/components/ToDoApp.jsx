@@ -1,79 +1,71 @@
 import { useState, useEffect } from "react";
-import { fetchData, postNewItem } from "../api";
+import { getData, postData, updateData, deleteData, filterData } from "../api";
 import Modal from "../Modal";
 import ToDoCard from "./ToDoCard";
+import ToDoFilter from "./ToDoFilter";
 import ToDoInput from "./ToDoInput";
 
 const ToDoApp = () => {
   const [value, setValue] = useState("");
-  const [newItem, setNewItem] = useState("");
-  // const [apiList, setApiList] = useState([]);
   const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
+  const [doFilter, setDoFilter] = useState(true);
 
-  // run after first render:
+  // fetch-then method:
+  // useEffect(() => {
+  //   (async function getList() {
+  //     const data = await getData;
+  //     setArr(data);
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    // api call
-    (async function getList() {
-      const data = await fetchData;
-      setArr(data);
-      // setArr([]); // to empty the local storagefor testing
-    })();
+  // async-await method:
+  useEffect(async () => {
+    const data = await getData();
+    setArr(data);
   }, []);
-
-  // run after every render:
 
   useEffect(() => {
     console.log("arr:", arr);
   }, [arr]);
 
-  const handleEditClick = (title, id) => {
-    setValue(title);
-    setEditId(id);
-  };
-
+  //  functions:
   const handleChange = (e) => {
     const { value } = e.target;
     setValue(value);
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     let trimmedValue = value.trim();
     if (!trimmedValue) return;
 
     if (editId) {
+      // edit an existing item
+      const res = await updateData(editId, trimmedValue);
       let _arr = [...arr];
       const editIndex = _arr.findIndex((item) => item.id === editId);
-      _arr[editIndex].title = trimmedValue;
+      _arr[editIndex].title = res.title;
       setArr(_arr);
     } else {
+      // add a new item
       let todo = {
         title: trimmedValue,
         completed: false,
       };
 
-      (async () => {
-        fetch("https://jsonplaceholder.typicode.com/todos", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify(todo),
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            let _arr = [...arr, json];
-            setArr(_arr);
-          });
-
-        // setArr([]); // to empty the local storagefor testing
-      })();
+      const res = await postData(todo);
+      let _arr = [...arr, res];
+      setArr(_arr);
     }
     setValue("");
     setEditId(null);
+  };
+
+  const handleEditClick = (title, id) => {
+    setValue(title);
+    setEditId(id);
   };
 
   const handleModalShow = (id) => {
@@ -81,15 +73,43 @@ const ToDoApp = () => {
     setDeleteId(id);
   };
 
-  const handleDelete = () => {
-    // let _arr = [...arr];
-    // const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
+  const handleDelete = async () => {
+    const res = await deleteData(deleteId);
 
-    // _arr.splice(deleteIndex, 1);
-    // setLocalList(_arr);
-    // setShow(!show);
+    // if(res.showStatus.ok){
+    let _arr = [...arr];
+    const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
+    _arr.splice(deleteIndex, 1);
+    setArr(_arr);
+    setShow(!show);
+    // }
+  };
 
-    console.log("deleted ", deleteId);
+  // const handleFilter = async () => {
+  //   setDoFilter(!doFilter);
+  //   if (doFilter) {
+  //     const res = await filterData();
+  //     setArr(res);
+  //   } else {
+  //     (async function getList() {
+  //       const data = await fetchData;
+  //       setArr(data);
+  //     })();
+  //   }
+  // };
+
+  const handleFilter = async () => {
+    setDoFilter(!doFilter);
+
+    if (doFilter) {
+      const res = await filterData();
+      setArr(res);
+    } else {
+      (async () => {
+        const data = await getData();
+        setArr(data);
+      })();
+    }
   };
 
   return (
@@ -100,6 +120,7 @@ const ToDoApp = () => {
         onAdd={handleAdd}
         editId={editId}
       />
+      <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
       {arr.map(({ id, title }) => (
         <ToDoCard
           key={id}
