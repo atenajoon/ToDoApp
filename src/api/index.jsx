@@ -20,16 +20,6 @@ export const deleteData = async (deleteId) => {
   return await res.json();
 };
 
-export const filterData = async () => {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/todos?completed=true`,
-    {
-      method: "GET",
-    }
-  );
-  return await res.json();
-};
-
 export const postData = async (todo) => {
   const res = await fetch("https://jsonplaceholder.typicode.com/todos", {
     method: "POST",
@@ -52,6 +42,16 @@ export const updateData = async (editId, trimmedValue) => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
+    }
+  );
+  return await res.json();
+};
+
+export const filterData = async () => {
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos?completed=true`,
+    {
+      method: "GET",
     }
   );
   return await res.json();
