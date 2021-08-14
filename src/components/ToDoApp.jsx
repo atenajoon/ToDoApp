@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { fetchData } from "../api";
+import { fetchData, postNewItem } from "../api";
 import Modal from "../Modal";
 import ToDoCard from "./ToDoCard";
 import ToDoInput from "./ToDoInput";
 
 const ToDoApp = () => {
   const [value, setValue] = useState("");
-  const [localList, setLocalList] = useState([]);
-  const [apiList, setApiList] = useState([]);
+  const [newItem, setNewItem] = useState("");
+  // const [apiList, setApiList] = useState([]);
   const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
@@ -16,31 +16,19 @@ const ToDoApp = () => {
   // run after first render:
 
   useEffect(() => {
-    // localStorage data fetch
-    const _arr = localStorage.getItem("todoList");
-    if (_arr) setLocalList(JSON.parse(_arr));
-    console.log("localList: ", localList);
-  }, []);
-
-  useEffect(() => {
     // api call
-    (async function func() {
+    (async function getList() {
       const data = await fetchData;
-      setApiList(data);
+      setArr(data);
+      // setArr([]); // to empty the local storagefor testing
     })();
-    console.log("apiList: ", apiList);
-  }, []);
-
-  useEffect(() => {
-    const _arr = [...apiList, ...localList];
-    setArr(_arr);
   }, []);
 
   // run after every render:
 
   useEffect(() => {
-    localStorage.setItem("todoList", JSON.stringify(localList));
-  }, [localList]);
+    console.log("arr:", arr);
+  }, [arr]);
 
   const handleEditClick = (title, id) => {
     setValue(title);
@@ -57,21 +45,32 @@ const ToDoApp = () => {
     if (!trimmedValue) return;
 
     if (editId) {
-      let _arr = [...localList];
+      let _arr = [...arr];
       const editIndex = _arr.findIndex((item) => item.id === editId);
       _arr[editIndex].title = trimmedValue;
-      setLocalList(_arr);
+      setArr(_arr);
     } else {
-      let newId =
-        localList.length > 0 ? localList[localList.length - 1].id + 1 : 1;
+      let todo = {
+        title: trimmedValue,
+        completed: false,
+      };
 
-      setLocalList((prevState) => [
-        ...prevState,
-        {
-          id: newId,
-          title: trimmedValue,
-        },
-      ]);
+      (async () => {
+        fetch("https://jsonplaceholder.typicode.com/todos", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify(todo),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            let _arr = [...arr, json];
+            setArr(_arr);
+          });
+
+        // setArr([]); // to empty the local storagefor testing
+      })();
     }
     setValue("");
     setEditId(null);
@@ -83,12 +82,14 @@ const ToDoApp = () => {
   };
 
   const handleDelete = () => {
-    let _arr = [...localList];
-    const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
+    // let _arr = [...arr];
+    // const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
 
-    _arr.splice(deleteIndex, 1);
-    setLocalList(_arr);
-    setShow(!show);
+    // _arr.splice(deleteIndex, 1);
+    // setLocalList(_arr);
+    // setShow(!show);
+
+    console.log("deleted ", deleteId);
   };
 
   return (
