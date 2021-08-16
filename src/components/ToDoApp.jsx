@@ -12,6 +12,7 @@ const ToDoApp = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
   const [doFilter, setDoFilter] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // fetch-then method:
   // useEffect(() => {
@@ -75,7 +76,6 @@ const ToDoApp = () => {
 
   const handleDelete = async () => {
     const res = await deleteData(deleteId);
-
     // if(res.showStatus.ok){
     let _arr = [...arr];
     const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
@@ -84,19 +84,6 @@ const ToDoApp = () => {
     setShow(!show);
     // }
   };
-
-  // const handleFilter = async () => {
-  //   setDoFilter(!doFilter);
-  //   if (doFilter) {
-  //     const res = await filterData();
-  //     setArr(res);
-  //   } else {
-  //     (async function getList() {
-  //       const data = await fetchData;
-  //       setArr(data);
-  //     })();
-  //   }
-  // };
 
   const handleFilter = async () => {
     setDoFilter(!doFilter);
@@ -112,6 +99,10 @@ const ToDoApp = () => {
     }
   };
 
+  const LoadingIndicator = () => {
+    return isLoading && <h1>Hey some async call in progress ! </h1>;
+  };
+
   return (
     <div>
       <ToDoInput
@@ -121,6 +112,7 @@ const ToDoApp = () => {
         editId={editId}
       />
       <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
+      <LoadingIndicator />
       {arr.map(({ id, title }) => (
         <ToDoCard
           key={id}
