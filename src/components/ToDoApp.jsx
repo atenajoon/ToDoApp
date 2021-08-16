@@ -96,13 +96,16 @@ const ToDoApp = () => {
 
   const handleFilter = async () => {
     setDoFilter(!doFilter);
+    setIsLoading(true);
 
     if (doFilter) {
       const res = await filterData();
+      setIsLoading(false);
       setArr(res);
     } else {
       (async () => {
         const data = await getData();
+        setIsLoading(false);
         setArr(data);
       })();
     }
