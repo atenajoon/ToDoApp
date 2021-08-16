@@ -13,7 +13,7 @@ const ToDoApp = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [show, setShow] = useState(false);
   const [doFilter, setDoFilter] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetch-then method:
   // useEffect(() => {
@@ -43,12 +43,15 @@ const ToDoApp = () => {
     let trimmedValue = value.trim();
     if (!trimmedValue) return;
 
+    setIsLoading(true);
     if (editId) {
       // edit an existing item
       const res = await updateData(editId, trimmedValue);
       let _arr = [...arr];
       const editIndex = _arr.findIndex((item) => item.id === editId);
       _arr[editIndex].title = res.title;
+
+      setIsLoading(false);
       setArr(_arr);
     } else {
       // add a new item
@@ -59,6 +62,8 @@ const ToDoApp = () => {
 
       const res = await postData(todo);
       let _arr = [...arr, res];
+
+      setIsLoading(false);
       setArr(_arr);
     }
     setValue("");
