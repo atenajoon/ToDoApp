@@ -81,13 +81,16 @@ const ToDoApp = () => {
   };
 
   const handleDelete = async () => {
+    setIsLoading(true);
     const res = await deleteData(deleteId);
     // if(res.showStatus.ok){
     let _arr = [...arr];
     const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
     _arr.splice(deleteIndex, 1);
-    setArr(_arr);
+
     setShow(!show);
+    setIsLoading(false);
+    setArr(_arr);
     // }
   };
 
