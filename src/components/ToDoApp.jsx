@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getData, postData, updateData, deleteData, filterData } from "../api";
 import Modal from "../Modal";
+import LoadingIndicator from "./LoadingIndicator";
 import ToDoCard from "./ToDoCard";
 import ToDoFilter from "./ToDoFilter";
 import ToDoInput from "./ToDoInput";
@@ -99,10 +100,6 @@ const ToDoApp = () => {
     }
   };
 
-  const LoadingIndicator = () => {
-    return isLoading && <h1>Hey some async call in progress ! </h1>;
-  };
-
   return (
     <div>
       <ToDoInput
@@ -112,7 +109,7 @@ const ToDoApp = () => {
         editId={editId}
       />
       <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
-      <LoadingIndicator />
+      <LoadingIndicator isLoading={isLoading} />
       {arr.map(({ id, title }) => (
         <ToDoCard
           key={id}
