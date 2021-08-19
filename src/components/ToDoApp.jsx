@@ -25,8 +25,7 @@ const ToDoApp = () => {
 
   // async-await method:
   useEffect(async () => {
-    const data = await getData();
-    setArr(data);
+    setList();
   }, []);
 
   useEffect(() => {
@@ -34,6 +33,11 @@ const ToDoApp = () => {
   }, [arr]);
 
   //  functions:
+  const setList = async () => {
+    const data = await getData();
+    setArr(data);
+  };
+
   const handleChange = (e) => {
     const { value } = e.target;
     setValue(value);
@@ -104,9 +108,7 @@ const ToDoApp = () => {
       setArr(res);
     } else {
       (async () => {
-        const data = await getData();
-        setIsLoading(false);
-        setArr(data);
+        setList();
       })();
     }
   };
