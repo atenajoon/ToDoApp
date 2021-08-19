@@ -104,10 +104,12 @@ const ToDoApp = () => {
 
     if (doFilter) {
       const res = await filterData();
+      console.log("filtered res:", res);
       setIsLoading(false);
       setArr(res);
     } else {
       (async () => {
+        setIsLoading(false);
         setList();
       })();
     }
