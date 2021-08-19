@@ -36,7 +36,7 @@ h2 {
   background-color: #800040;
   color: white;
   border: 1px solid #800040;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 .btn:hover {
   background-color: #9c1458;
@@ -74,8 +74,8 @@ h2 {
   border-radius: 4px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  width: 20rem;
-  margin: 1rem 0;
+  /* width: 20rem;
+  margin: 1rem 0; */
 }
 
 .actions {
@@ -104,4 +104,9 @@ h2 {
   height: 100vh;
   top: 0;
   left: 0;
+}
+.container {
+  display: grid;
+  grid-template: repeat(2, 250px) / repeat(2, 1fr);
+  grid-gap: 2rem;
 }

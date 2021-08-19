@@ -104,7 +104,6 @@ const ToDoApp = () => {
 
     if (doFilter) {
       const res = await filterData();
-      console.log("filtered res:", res);
       setIsLoading(false);
       setArr(res);
     } else {
@@ -125,19 +124,21 @@ const ToDoApp = () => {
       />
       <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
 
-      {isLoading ? (
-        <LoadingIndicator isLoading={isLoading} />
-      ) : (
-        arr.map(({ id, title }) => (
-          <ToDoCard
-            key={id}
-            id={id}
-            item={title}
-            onEdit={() => handleEditClick(title, id)}
-            onDelete={() => handleModalShow(id)}
-          />
-        ))
-      )}
+      <div className="container">
+        {isLoading ? (
+          <LoadingIndicator isLoading={isLoading} />
+        ) : (
+          arr.map(({ id, title }) => (
+            <ToDoCard
+              key={id}
+              id={id}
+              item={title}
+              onEdit={() => handleEditClick(title, id)}
+              onDelete={() => handleModalShow(id)}
+            />
+          ))
+        )}
+      </div>
 
       <Modal
         showStatus={show}
