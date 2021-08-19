@@ -122,16 +122,21 @@ const ToDoApp = () => {
         editId={editId}
       />
       <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
-      <LoadingIndicator isLoading={isLoading} />
-      {arr.map(({ id, title }) => (
-        <ToDoCard
-          key={id}
-          id={id}
-          item={title}
-          onEdit={() => handleEditClick(title, id)}
-          onDelete={() => handleModalShow(id)}
-        />
-      ))}
+
+      {isLoading ? (
+        <LoadingIndicator isLoading={isLoading} />
+      ) : (
+        arr.map(({ id, title }) => (
+          <ToDoCard
+            key={id}
+            id={id}
+            item={title}
+            onEdit={() => handleEditClick(title, id)}
+            onDelete={() => handleModalShow(id)}
+          />
+        ))
+      )}
+
       <Modal
         showStatus={show}
         onCancel={handleModalShow}
