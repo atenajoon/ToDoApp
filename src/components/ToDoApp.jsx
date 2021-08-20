@@ -133,7 +133,7 @@ const ToDoApp = () => {
         <LoadingIndicator className="content" isLoading={isLoading} />
       ) : (
         <div className="cardContainer">
-          {arr.map(({ id, title }) => (
+          {[...arr].reverse().map(({ id, title }) => (
             <ToDoCard
               key={id}
               id={id}
