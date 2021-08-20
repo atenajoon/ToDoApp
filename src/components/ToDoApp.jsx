@@ -116,15 +116,17 @@ const ToDoApp = () => {
 
   return (
     <div>
-      <ToDoInput
-        value={value}
-        onChange={handleChange}
-        onAdd={handleAdd}
-        editId={editId}
-      />
-      <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
+      <div className="content">
+        <ToDoInput
+          value={value}
+          onChange={handleChange}
+          onAdd={handleAdd}
+          editId={editId}
+        />
+        <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
+      </div>
 
-      <div className="container">
+      <div className="cardContainer">
         {isLoading ? (
           <LoadingIndicator isLoading={isLoading} />
         ) : (

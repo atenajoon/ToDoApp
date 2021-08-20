@@ -105,8 +105,18 @@ h2 {
   top: 0;
   left: 0;
 }
-.container {
+.content {
+  text-align: center;
+}
+.cardContainer {
   display: grid;
   grid-template: repeat(2, 250px) / repeat(2, 1fr);
   grid-gap: 2rem;
+}
+@media only screen and (max-width: 768px) {
+  .cardContainer {
+    display: grid;
+    grid-template: repeat(2, 250px) / 1fr;
+    grid-gap: 2rem;
+  }
 }
