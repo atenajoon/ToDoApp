@@ -14,6 +14,7 @@ const ToDoApp = () => {
   const [show, setShow] = useState(false);
   const [doFilter, setDoFilter] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [spiner, setSpiner] = useState(false);
 
   // fetch-then method:
   // useEffect(() => {
@@ -47,7 +48,7 @@ const ToDoApp = () => {
     let trimmedValue = value.trim();
     if (!trimmedValue) return;
 
-    setIsLoading(true);
+    setSpiner(true);
     if (editId) {
       // edit an existing item
       const res = await updateData(editId, trimmedValue);
@@ -55,7 +56,7 @@ const ToDoApp = () => {
       const editIndex = _arr.findIndex((item) => item.id === editId);
       _arr[editIndex].title = res.title;
 
-      setIsLoading(false);
+      setSpiner(false);
       setArr(_arr);
     } else {
       // add a new item
@@ -67,7 +68,7 @@ const ToDoApp = () => {
       const res = await postData(todo);
       let _arr = [...arr, res];
 
-      setIsLoading(false);
+      setSpiner(false);
       setArr(_arr);
     }
     setValue("");
@@ -85,7 +86,7 @@ const ToDoApp = () => {
   };
 
   const handleDelete = async () => {
-    setIsLoading(true);
+    setSpiner(true);
     const res = await deleteData(deleteId);
     // if(res.showStatus.ok){
     let _arr = [...arr];
@@ -93,7 +94,7 @@ const ToDoApp = () => {
     _arr.splice(deleteIndex, 1);
 
     setShow(!show);
-    setIsLoading(false);
+    setSpiner(false);
     setArr(_arr);
     // }
   };
@@ -117,20 +118,22 @@ const ToDoApp = () => {
   return (
     <div>
       <div className="content">
+        {spiner ? <i className="fa fa-spinner fa-spin">spiner...!</i> : null}
         <ToDoInput
           value={value}
           onChange={handleChange}
           onAdd={handleAdd}
           editId={editId}
         />
+
         <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
       </div>
 
-      <div className="cardContainer">
-        {isLoading ? (
-          <LoadingIndicator isLoading={isLoading} />
-        ) : (
-          arr.map(({ id, title }) => (
+      {isLoading ? (
+        <LoadingIndicator className="content" isLoading={isLoading} />
+      ) : (
+        <div className="cardContainer">
+          {arr.map(({ id, title }) => (
             <ToDoCard
               key={id}
               id={id}
@@ -138,9 +141,9 @@ const ToDoApp = () => {
               onEdit={() => handleEditClick(title, id)}
               onDelete={() => handleModalShow(id)}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       <Modal
         showStatus={show}
