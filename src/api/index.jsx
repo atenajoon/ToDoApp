@@ -10,6 +10,7 @@ export const getData = async () => {
   return await res.json();
 };
 
+// simulate deleting from database
 export const deleteData = async (deleteId) => {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/todos/${deleteId}`,

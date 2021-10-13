@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getData, postData, updateData, deleteData, filterData } from "../api";
 import Modal from "../Modal";
 import LoadingIndicator from "./LoadingIndicator";
@@ -24,21 +24,21 @@ const ToDoApp = () => {
   //   })();
   // }, []);
 
-  // async-await method:
-  useEffect(async () => {
-    setList();
-  }, []);
-
   useEffect(() => {
     console.log("arr:", arr);
   }, [arr]);
 
-  //  functions:
-  const setList = async () => {
+  // async-await method:
+  const setList = useCallback(async () => {
     const data = await getData();
     setArr(data);
-  };
+  }, []);
 
+  useEffect(() => {
+    setList();
+  }, [setList]);
+
+  // functions:
   const handleChange = (e) => {
     const { value } = e.target;
     setValue(value);
@@ -87,16 +87,17 @@ const ToDoApp = () => {
 
   const handleDelete = async () => {
     setSpiner(true);
+    // simulate deleting from database
     const res = await deleteData(deleteId);
-    // if(res.showStatus.ok){
-    let _arr = [...arr];
-    const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
-    _arr.splice(deleteIndex, 1);
+    if (res.showStatus.ok) {
+      let _arr = [...arr];
+      const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
+      _arr.splice(deleteIndex, 1);
 
-    setShow(!show);
-    setSpiner(false);
-    setArr(_arr);
-    // }
+      setShow(!show);
+      setSpiner(false);
+      setArr(_arr);
+    }
   };
 
   const handleFilter = async () => {
