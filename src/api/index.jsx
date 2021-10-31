@@ -18,7 +18,8 @@ export const deleteData = async (deleteId) => {
       method: "DELETE",
     }
   );
-  return await res.json();
+
+  return res;
 };
 
 export const postData = async (todo) => {

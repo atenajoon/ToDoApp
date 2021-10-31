@@ -16,14 +16,6 @@ const ToDoApp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [spiner, setSpiner] = useState(false);
 
-  // fetch-then method:
-  // useEffect(() => {
-  //   (async function getList() {
-  //     const data = await getData;
-  //     setArr(data);
-  //   })();
-  // }, []);
-
   useEffect(() => {
     console.log("arr:", arr);
   }, [arr]);
@@ -89,13 +81,14 @@ const ToDoApp = () => {
     setSpiner(true);
     // simulate deleting from database
     const res = await deleteData(deleteId);
-    if (res.showStatus.ok) {
+    if (res.ok) {
       let _arr = [...arr];
       const deleteIndex = _arr.findIndex((item) => item.id === deleteId);
       _arr.splice(deleteIndex, 1);
 
       setShow(!show);
       setSpiner(false);
+      console.log("arr", _arr);
       setArr(_arr);
     }
   };
