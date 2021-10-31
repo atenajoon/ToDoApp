@@ -4,7 +4,7 @@ const ToDoFilter = ({ doFilter, onFilter }) => {
   return (
     <div>
       <Button className="btn--alt" onClick={onFilter}>
-        {doFilter ? "Completed" : "All"}
+        {doFilter ? "Show Completed" : "Show All"}
       </Button>
       <p>{doFilter ? "All Tasks:" : "Completed Tasks:"}</p>
     </div>
