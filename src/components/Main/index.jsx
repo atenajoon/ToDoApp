@@ -1,12 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
-import { getData, postData, updateData, deleteData, filterData } from "../api";
-import Modal from "../Modal";
-import LoadingIndicator from "./LoadingIndicator";
-import ToDoCard from "./ToDoCard";
-import ToDoFilter from "./ToDoFilter";
-import ToDoInput from "./ToDoInput";
+import {
+  getData,
+  postData,
+  updateData,
+  deleteData,
+  filterData,
+} from "../../api";
+import Modal from "../../Modal";
+import LoadingIndicator from "../LoadingIndicator";
+import ToDoCard from "../ToDoCard";
+import ToDoFilter from "../ToDoFilter";
+import ToDoInput from "../ToDoInput";
 
-const ToDoApp = () => {
+const Main = () => {
   const [value, setValue] = useState("");
   const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
@@ -118,6 +124,7 @@ const ToDoApp = () => {
           onChange={handleChange}
           onAdd={handleAdd}
           editId={editId}
+          npm
         />
 
         <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
@@ -148,4 +155,4 @@ const ToDoApp = () => {
   );
 };
 
-export default ToDoApp;
+export default Main;
