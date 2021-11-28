@@ -1,6 +1,6 @@
-import Button from "./common/Button";
+import Button from "../common/Button";
 
-const ToDoInput = ({ value, onChange, onAdd, editId }) => {
+const AddATask = ({ value, onChange, onAdd, editId }) => {
   return (
     <div>
       <input value={value} onChange={onChange} />
@@ -11,4 +11,4 @@ const ToDoInput = ({ value, onChange, onAdd, editId }) => {
   );
 };
 
-export default ToDoInput;
+export default AddATask;

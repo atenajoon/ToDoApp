@@ -10,7 +10,7 @@ import Modal from "../../Modal";
 import LoadingIndicator from "../LoadingIndicator";
 import ToDoCard from "../ToDoCard";
 import ToDoFilter from "../ToDoFilter";
-import ToDoInput from "../ToDoInput";
+import AddATask from "../AddATask";
 
 const Main = () => {
   const [value, setValue] = useState("");
@@ -119,7 +119,7 @@ const Main = () => {
     <div>
       <div className="content">
         {spiner ? <i className="fa fa-spinner fa-spin">spiner...!</i> : null}
-        <ToDoInput
+        <AddATask
           value={value}
           onChange={handleChange}
           onAdd={handleAdd}
