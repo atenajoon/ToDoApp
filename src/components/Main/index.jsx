@@ -7,7 +7,7 @@ import {
   filterData,
 } from "../../api";
 import Modal from "../../Modal";
-import LoadingIndicator from "../LoadingIndicator";
+import Spinner from "../Spinner";
 import ToDoCard from "../ToDoCard";
 import FilterTasks from "../FilterTasks";
 import AddATask from "../AddATask";
@@ -131,7 +131,7 @@ const Main = () => {
       </div>
 
       {isLoading ? (
-        <LoadingIndicator className="content" isLoading={isLoading} />
+        <Spinner className="content" isLoading={isLoading} />
       ) : (
         <div className="cardContainer">
           {[...arr].reverse().map(({ id, title }) => (
