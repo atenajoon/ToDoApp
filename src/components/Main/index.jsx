@@ -6,7 +6,7 @@ import {
   deleteData,
   filterData,
 } from "../../api";
-import Modal from "../../Modal";
+import Modal from "../common/Modal";
 import Spinner from "../Spinner";
 import TaskCard from "../TaskCard";
 import FilterTasks from "../FilterTasks";
