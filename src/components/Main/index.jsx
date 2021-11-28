@@ -8,7 +8,7 @@ import {
 } from "../../api";
 import Modal from "../../Modal";
 import Spinner from "../Spinner";
-import ToDoCard from "../ToDoCard";
+import TaskCard from "../TaskCard";
 import FilterTasks from "../FilterTasks";
 import AddATask from "../AddATask";
 
@@ -135,7 +135,7 @@ const Main = () => {
       ) : (
         <div className="cardContainer">
           {[...arr].reverse().map(({ id, title }) => (
-            <ToDoCard
+            <TaskCard
               key={id}
               id={id}
               item={title}

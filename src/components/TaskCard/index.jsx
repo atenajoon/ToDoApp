@@ -1,6 +1,6 @@
-import Button from "./common/Button";
+import Button from "../common/Button";
 
-const ToDoCard = ({ item, onDelete, onEdit }) => {
+const TaskCard = ({ item, onDelete, onEdit }) => {
   return (
     <div className="card">
       <h2>{item}</h2>
@@ -16,4 +16,4 @@ const ToDoCard = ({ item, onDelete, onEdit }) => {
   );
 };
 
-export default ToDoCard;
+export default TaskCard;
