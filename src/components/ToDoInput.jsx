@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./common/Button";
 
 const ToDoInput = ({ value, onChange, onAdd, editId }) => {
   return (

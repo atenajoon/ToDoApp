@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./common/Button";
 
 const ToDoCard = ({ item, onDelete, onEdit }) => {
   return (

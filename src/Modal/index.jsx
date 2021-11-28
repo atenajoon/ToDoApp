@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import Backdrop from "./Backdrop";
 
 const Modal = ({ showStatus, onCancel, onConfirm }) => {
