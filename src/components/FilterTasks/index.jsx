@@ -1,6 +1,6 @@
-import Button from "./Button";
+import Button from "../common/Button";
 
-const ToDoFilter = ({ doFilter, onFilter }) => {
+const FilterTasks = ({ doFilter, onFilter }) => {
   return (
     <div>
       <Button className="btn--alt" onClick={onFilter}>
@@ -11,4 +11,4 @@ const ToDoFilter = ({ doFilter, onFilter }) => {
   );
 };
 
-export default ToDoFilter;
+export default FilterTasks;

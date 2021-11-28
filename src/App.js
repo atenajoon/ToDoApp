@@ -1,10 +1,10 @@
-import ToDoApp from "./components/ToDoApp";
+import Main from "./components/Main";
 
 function App() {
   return (
     <div className="App">
-      <h1 className="content">My ToDoApp</h1>
-      <ToDoApp />
+      <h1 className="content">My Main</h1>
+      <Main />
     </div>
   );
 }

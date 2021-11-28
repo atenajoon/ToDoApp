@@ -1,12 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
-import { getData, postData, updateData, deleteData, filterData } from "../api";
-import Modal from "../Modal";
-import LoadingIndicator from "./LoadingIndicator";
-import ToDoCard from "./ToDoCard";
-import ToDoFilter from "./ToDoFilter";
-import ToDoInput from "./ToDoInput";
+import {
+  getData,
+  postData,
+  updateData,
+  deleteData,
+  filterData,
+} from "../../api";
+import Modal from "../common/Modal";
+import Spinner from "../Spinner";
+import TaskCard from "../TaskCard";
+import FilterTasks from "../FilterTasks";
+import AddATask from "../AddATask";
 
-const ToDoApp = () => {
+const Main = () => {
   const [value, setValue] = useState("");
   const [arr, setArr] = useState([]);
   const [editId, setEditId] = useState(null);
@@ -113,22 +119,23 @@ const ToDoApp = () => {
     <div>
       <div className="content">
         {spiner ? <i className="fa fa-spinner fa-spin">spiner...!</i> : null}
-        <ToDoInput
+        <AddATask
           value={value}
           onChange={handleChange}
           onAdd={handleAdd}
           editId={editId}
+          npm
         />
 
-        <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
+        <FilterTasks doFilter={doFilter} onFilter={handleFilter} />
       </div>
 
       {isLoading ? (
-        <LoadingIndicator className="content" isLoading={isLoading} />
+        <Spinner className="content" isLoading={isLoading} />
       ) : (
         <div className="cardContainer">
           {[...arr].reverse().map(({ id, title }) => (
-            <ToDoCard
+            <TaskCard
               key={id}
               id={id}
               item={title}
@@ -148,4 +155,4 @@ const ToDoApp = () => {
   );
 };
 
-export default ToDoApp;
+export default Main;
