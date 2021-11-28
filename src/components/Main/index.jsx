@@ -9,7 +9,7 @@ import {
 import Modal from "../../Modal";
 import LoadingIndicator from "../LoadingIndicator";
 import ToDoCard from "../ToDoCard";
-import ToDoFilter from "../ToDoFilter";
+import FilterTasks from "../FilterTasks";
 import AddATask from "../AddATask";
 
 const Main = () => {
@@ -127,7 +127,7 @@ const Main = () => {
           npm
         />
 
-        <ToDoFilter doFilter={doFilter} onFilter={handleFilter} />
+        <FilterTasks doFilter={doFilter} onFilter={handleFilter} />
       </div>
 
       {isLoading ? (
